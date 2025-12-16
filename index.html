@@ -44,42 +44,47 @@
 
           <!-- RIGHT MENU (one row) -->
           <nav class="nav-desktop nav-right" aria-label="Main navigation right">
-            <div class="nav-row">
+            <div class="nav-row nav-row--right">
               <a class="nav-link" href="#surrogates">Surrogates &amp; Donors</a>
               <a class="nav-link" href="#news">News &amp; Events</a>
               <a class="nav-link" href="#resources">Resources</a>
 
-              <a class="nav-link nav-link--primary" href="#contacts">Contacts</a>
+              <!-- symmetry group -->
+              <div class="nav-right-tools" aria-label="Header tools">
+                <a class="nav-link nav-link--primary" href="#contacts">Contacts</a>
 
-              <!-- SEARCH AFTER CONTACTS -->
-              <button
-                class="nav-icon-btn"
-                id="open-search"
-                type="button"
-                aria-label="Search"
-                aria-controls="search-overlay"
-                aria-expanded="false"
-                title="Search"
-              >
-                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-              </button>
+                <button
+                  class="nav-icon-btn"
+                  id="open-search"
+                  type="button"
+                  aria-label="Search"
+                  aria-controls="search-overlay"
+                  aria-expanded="false"
+                  title="Search"
+                >
+                  <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                </button>
+
+                <div class="lang-switcher" id="lang-switcher">
+                  <button class="lang-current" type="button" aria-haspopup="true" aria-expanded="false">
+                    EN
+                  </button>
+                  <div class="lang-menu" role="menu" aria-label="Language menu">
+                    <button data-lang="en" class="active" type="button" role="menuitem">
+                      EN — English
+                    </button>
+                    <button data-lang="es" type="button" role="menuitem">ES — Español</button>
+                    <button data-lang="de" type="button" role="menuitem">DE — Deutsch</button>
+                    <button data-lang="ru" type="button" role="menuitem">RU — Русский</button>
+                  </div>
+                </div>
+              </div>
+              <!-- /symmetry group -->
             </div>
           </nav>
 
-          <!-- Controls -->
+          <!-- Mobile controls (only burger here) -->
           <div class="header-controls">
-            <div class="lang-switcher" id="lang-switcher">
-              <button class="lang-current" type="button">EN</button>
-              <div class="lang-menu" role="menu" aria-label="Language menu">
-                <button data-lang="en" class="active" type="button" role="menuitem">
-                  EN — English
-                </button>
-                <button data-lang="es" type="button" role="menuitem">ES — Español</button>
-                <button data-lang="de" type="button" role="menuitem">DE — Deutsch</button>
-                <button data-lang="ru" type="button" role="menuitem">RU — Русский</button>
-              </div>
-            </div>
-
             <button
               class="burger"
               id="burger"
@@ -114,9 +119,7 @@
             aria-label="Search query"
             autocomplete="off"
           />
-          <button class="btn-primary search-submit" type="submit">
-            Search
-          </button>
+          <button class="btn-primary search-submit" type="submit">Search</button>
         </form>
 
         <div class="search-hint">
@@ -154,10 +157,10 @@
       <section class="band band-hero" id="hero">
         <div class="container hero-layout">
           <div class="hero-content">
-            <div class="hero-inner hero-inner--shift" data-aos="fade-right">
+            <div class="hero-inner" data-aos="fade-right">
               <div class="hero-kicker">International reproductive law agency</div>
 
-              <h1 class="hero-title hero-title--shift">
+              <h1 class="hero-title">
                 Creating families<br />around the world
               </h1>
 
@@ -166,9 +169,7 @@
                 safety for parents and children.
               </p>
 
-              <p class="hero-meta">
-                20+ years of experience · 30+ countries · 1000+ successful cases
-              </p>
+              <p class="hero-meta">20+ years of experience · 30+ countries · 1000+ successful cases</p>
 
               <div class="hero-cta">
                 <a href="#contacts" class="btn-primary">Book a consultation</a>
@@ -201,6 +202,10 @@
             coordinators speaks several languages and supports families from the first consultation to
             obtaining the child’s documents.
           </p>
+          <div class="section-cta-center" data-aos="fade-up" data-aos-delay="180">
+  <a href="about/mission.html" class="btn-primary">Learn more about us</a>
+</div>
+
         </div>
       </section>
 
@@ -217,7 +222,7 @@
 
           <div class="stats-row" data-aos="fade-up" data-aos-delay="50">
             <div class="stat-item">
-              <div class="stat-icon">
+              <div class="stat-icon" aria-hidden="true">
                 <i class="fa-regular fa-hourglass-half" aria-hidden="true"></i>
               </div>
               <div class="stat-number" data-counter="20">0</div>
@@ -225,29 +230,36 @@
             </div>
 
             <div class="stat-item">
-              <div class="stat-icon">
+              <div class="stat-icon" aria-hidden="true">
                 <i class="fa-solid fa-globe" aria-hidden="true"></i>
               </div>
               <div class="stat-number" data-counter="30">0</div>
               <div class="stat-label">countries</div>
             </div>
 
+            <!-- ✅ HERE: FIXED FAMILY ICON -->
             <div class="stat-item">
-              <div class="stat-icon">
-                <i class="fa-solid fa-people-group" aria-hidden="true"></i>
+              <div class="stat-icon stat-icon--family" aria-hidden="true">
+                <span class="family-stack" aria-hidden="true">
+                  <i class="fa-solid fa-person adult-left" aria-hidden="true"></i>
+                  <i class="fa-solid fa-child child-center" aria-hidden="true"></i>
+                  <i class="fa-solid fa-person adult-right" aria-hidden="true"></i>
+                </span>
               </div>
               <div class="stat-number" data-counter="1000">0</div>
               <div class="stat-label">families supported</div>
             </div>
+            <!-- ✅ /FIX -->
           </div>
         </div>
       </section>
 
-      <!-- AS SEEN IN (SEPARATE BLOCK) -->
+      <!-- AS SEEN IN -->
       <section class="band band-light seen" id="seen">
         <div class="container">
           <div class="seen-row" data-aos="fade-up">
             <div class="seen-label">As Seen In</div>
+
             <div class="seen-logos">
               <a
                 class="seen-logo"
@@ -257,6 +269,7 @@
               >
                 <img src="img/media/guardian.png" alt="The Guardian" />
               </a>
+
               <a
                 class="seen-logo"
                 href="https://www.nytimes.com/2020/08/15/world/europe/ukraine-baby-surrogate.html"
@@ -265,6 +278,7 @@
               >
                 <img src="img/media/nyt.png" alt="The New York Times" />
               </a>
+
               <a
                 class="seen-logo"
                 href="https://www.marieclaire.com/health-fitness/a32433196/surrogacy-covid-19-ukraine/"
@@ -273,6 +287,7 @@
               >
                 <img src="img/media/marieclaire.png" alt="Marie Claire" />
               </a>
+
               <a
                 class="seen-logo"
                 href="https://www.abc.net.au/news/2019-08-21/motherland/11432194"
@@ -281,6 +296,7 @@
               >
                 <img src="img/media/abc.png" alt="ABC" />
               </a>
+
               <a
                 class="seen-logo"
                 href="https://amp.dw.com/en/coronavirus-babies-born-to-surrogates-stranded-in-ukraine-clinic/a-53547276"
@@ -289,6 +305,7 @@
               >
                 <img src="img/media/dw.png" alt="Deutsche Welle" />
               </a>
+
               <a
                 class="seen-logo"
                 href="https://www.aljazeera.com/features/2018/9/13/ukraines-baby-factories-the-human-cost-of-surrogacy"
@@ -296,6 +313,31 @@
                 rel="noopener"
               >
                 <img src="img/media/aljazeera.png" alt="Al Jazeera" />
+              </a>
+
+              <!-- added tabloids -->
+              <a class="seen-logo" href="#" target="_blank" rel="noopener">
+                <img src="img/media/dailymail.png" alt="Daily Mail" />
+              </a>
+
+              <a class="seen-logo" href="#" target="_blank" rel="noopener">
+                <img src="img/media/cne.png" alt="CNE" />
+              </a>
+
+              <a class="seen-logo" href="#" target="_blank" rel="noopener">
+                <img src="img/media/elpais.png" alt="El País" />
+              </a>
+
+              <a class="seen-logo" href="#" target="_blank" rel="noopener">
+                <img src="img/media/bbc.png" alt="BBC" />
+              </a>
+
+              <a class="seen-logo" href="#" target="_blank" rel="noopener">
+                <img src="img/media/sky.png" alt="Sky News" />
+              </a>
+
+              <a class="seen-logo" href="#" target="_blank" rel="noopener">
+                <img src="img/media/nbc.png" alt="NBC" />
               </a>
             </div>
           </div>
@@ -389,7 +431,6 @@
             <div class="swiper-pagination services-pagination"></div>
           </div>
 
-          <!-- OTHER SERVICES BUTTON -->
           <div class="section-cta-center" data-aos="fade-up">
             <a href="services.html" class="btn-primary">Other services</a>
           </div>
@@ -421,14 +462,13 @@
             </article>
           </div>
 
-          <!-- CENTERED WHY US BUTTON -->
           <div class="section-cta-center" data-aos="fade-up">
             <a href="why-us.html" class="btn-primary">Why us?</a>
           </div>
         </div>
       </section>
 
-      <!-- GUIDES COUNTRIES (NEW BLOCK BEFORE TESTIMONIALS) -->
+      <!-- GUIDES COUNTRIES -->
       <section class="band band-light guides-countries" id="program-guides">
         <div class="container">
           <div class="section-heading" data-aos="fade-up">
@@ -479,10 +519,7 @@
               <span class="country-name">KYRGYZSTAN</span>
             </a>
 
-            <a class="country-pill" href="resources/guides/others.html">
-              <span class="flag-3d">
-                <img src="img/flags/others.png" alt="Other countries" />
-              </span>
+            <a class="country-pill country-pill--others" href="resources/guides/others.html">
               <span class="country-name">OTHERS</span>
             </a>
           </div>
@@ -551,7 +588,6 @@
             <div class="swiper-pagination testimonials-pagination"></div>
           </div>
 
-          <!-- OTHER TESTIMONIALS BUTTON -->
           <div class="section-cta-center" data-aos="fade-up">
             <a href="testimonials.html" class="btn-primary">Other testimonials</a>
           </div>
@@ -593,12 +629,12 @@
           </div>
 
           <div class="section-cta-center">
-            <a href="news.html" class="btn-primary">See all news</a>
+            <a href="news.html" class="btn-primary">See all</a>
           </div>
         </div>
       </section>
 
-      <!-- PARTNERS (REWORKED AS CLICKABLE CATEGORIES) -->
+      <!-- PARTNERS -->
       <section class="band band-light partners" id="partners">
         <div class="container">
           <div class="section-heading" data-aos="fade-up">
@@ -607,9 +643,16 @@
           </div>
 
           <div class="partners-categories" data-aos="fade-up">
+            <a class="partner-cat" href="partners/agencies.html">Agencies</a>
             <a class="partner-cat" href="partners/clinics.html">Clinics</a>
             <a class="partner-cat" href="partners/law-firms.html">Law firms</a>
-            <a class="partner-cat" href="partners/banks.html">Banks</a>
+            <a class="partner-cat" href="partners/representatives.html">Representatives &amp; agents</a>
+            <a class="partner-cat" href="partners/banks.html">Gamete &amp; embryo banks</a>
+            <a class="partner-cat" href="partners/transport.html">Embryo &amp; gamete transport</a>
+            <a class="partner-cat" href="partners/cryobanks.html">Cryobanks</a>
+            <a class="partner-cat" href="partners/dna.html">DNA laboratories</a>
+            <a class="partner-cat" href="partners/translators.html">Interpreters &amp; translators</a>
+            <a class="partner-cat" href="partners/others.html">Others</a>
           </div>
         </div>
       </section>
@@ -618,7 +661,6 @@
       <section class="band band-light resources" id="resources">
         <div class="container">
           <div class="grid two-col">
-            <!-- Resources -->
             <div>
               <div class="section-heading left" data-aos="fade-right">
                 <h2>Resources</h2>
@@ -652,7 +694,6 @@
               </div>
             </div>
 
-            <!-- Contacts -->
             <div id="contacts">
               <div class="section-heading left" data-aos="fade-left">
                 <h2>Contacts</h2>
@@ -685,161 +726,111 @@
     </main>
 
     <!-- FOOTER -->
-<!-- FOOTER -->
-<footer class="site-footer" role="contentinfo">
-  <div class="container">
-    <div class="footer-top">
-      <!-- Brand + socials -->
-      <div class="footer-brand">
-        <a class="footer-logo" href="#top" aria-label="REPRONOVA homepage">REPRONOVA</a>
-        <p class="footer-tagline">
-          International reproductive law agency · Independent legal support worldwide.
-        </p>
+    <footer class="site-footer" role="contentinfo">
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <a class="footer-logo" href="#top" aria-label="REPRONOVA homepage">REPRONOVA</a>
+            <p class="footer-tagline">Follow us</p>
 
-        <div class="footer-socials" aria-label="Social links">
-          <a href="#" aria-label="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
-          <a href="#" aria-label="Instagram" title="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-          <a href="#" aria-label="Facebook" title="Facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-          <a href="#" aria-label="X" title="X"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
-          <a href="#" aria-label="YouTube" title="YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
-        </div>
-      </div>
+            <div class="footer-socials" aria-label="Social links">
+              <a href="#" aria-label="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+              <a href="#" aria-label="Instagram" title="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+              <a href="#" aria-label="Facebook" title="Facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+              <a href="#" aria-label="X" title="X"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+              <a href="#" aria-label="YouTube" title="YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+            </div>
+          </div>
 
-      <!-- Links (compact) -->
-      <nav class="footer-nav" aria-label="Footer navigation">
-        <div class="footer-col">
-          <div class="footer-title">Company</div>
-          <ul class="footer-links">
-            <li><a href="about/mission.html">Mission</a></li>
-            <li><a href="about/team.html">Team</a></li>
-            <li><a href="founder.html">Founder</a></li>
-            <li><a href="media.html">Media</a></li>
-          </ul>
-        </div>
+          <nav class="footer-nav" aria-label="Footer navigation">
+            <div class="footer-col">
+              <div class="footer-title">Company</div>
+              <ul class="footer-links">
+                <li><a href="about/mission.html">Mission</a></li>
+                <li><a href="about/team.html">Team</a></li>
+                <li><a href="founder.html">Founder</a></li>
+                <li><a href="media.html">Media</a></li>
+              </ul>
+            </div>
 
-        <div class="footer-col">
-          <div class="footer-title">Services</div>
-          <ul class="footer-links">
-            <li><a href="services.html">Full list</a></li>
-            <li><a href="services/legal-opinion.html">Legal opinions</a></li>
-            <li><a href="services/independent-advisor.html">Independent advisor</a></li>
-          </ul>
-        </div>
+            <div class="footer-col">
+              <div class="footer-title">Services</div>
+              <ul class="footer-links">
+                <li><a href="services.html">Full list</a></li>
+                <li><a href="services/legal-opinion.html">Legal opinions</a></li>
+                <li><a href="services/independent-advisor.html">Independent advisor</a></li>
+              </ul>
+            </div>
 
-        <div class="footer-col">
-          <div class="footer-title">Resources</div>
-          <ul class="footer-links">
-            <li><a href="resources/legislation.html">Legislation</a></li>
-            <li><a href="resources/publications.html">Publications</a></li>
-            <li><a href="resources/faq.html">FAQ</a></li>
-            <li><a href="resources/guides.html">Guides</a></li>
-          </ul>
-        </div>
+            <div class="footer-col">
+              <div class="footer-title">Resources</div>
+              <ul class="footer-links">
+                <li><a href="resources/legislation.html">Legislation</a></li>
+                <li><a href="resources/publications.html">Publications</a></li>
+                <li><a href="resources/faq.html">FAQ</a></li>
+                <li><a href="resources/guides.html">Guides</a></li>
+              </ul>
+            </div>
 
-        <div class="footer-col">
-          <div class="footer-title">Updates</div>
-          <ul class="footer-links">
-            <li><a href="news.html">News</a></li>
-            <li><a href="events/our.html">Our events</a></li>
-            <li><a href="partners/clinics.html">Partners</a></li>
-          </ul>
-        </div>
-      </nav>
+            <div class="footer-col">
+              <div class="footer-title">Updates</div>
+              <ul class="footer-links">
+                <li><a href="news.html">News</a></li>
+                <li><a href="events/our.html">Our events</a></li>
+                <li><a href="partners/clinics.html">Partners</a></li>
+              </ul>
+            </div>
+          </nav>
 
-      <!-- Contact + subscribe -->
-      <div class="footer-actions">
-        <div class="footer-title">Contact</div>
+          <div class="footer-actions">
+            <div class="footer-title">Contact</div>
 
-        <div class="footer-contact">
-          <a class="footer-contact-item" href="mailto:info@repronova.com">
-            <i class="fa-regular fa-envelope" aria-hidden="true"></i>
-            <span>info@repronova.com</span>
-          </a>
+            <div class="footer-contact">
+              <a class="footer-contact-item" href="mailto:info@repronova.com">
+                <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+                <span>info@repronova.com</span>
+              </a>
 
-          <a class="footer-contact-item" href="tel:+41445051510">
-            <i class="fa-solid fa-phone" aria-hidden="true"></i>
-            <span>+41 44 505 15 10</span>
-          </a>
+              <a class="footer-contact-item" href="tel:+41445051510">
+                <i class="fa-solid fa-phone" aria-hidden="true"></i>
+                <span>+41 44 505 15 10</span>
+              </a>
 
-          <div class="footer-contact-item footer-contact-item--muted">
-            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-            <span>Switzerland · Remote worldwide</span>
+              <div class="footer-contact-item footer-contact-item--muted">
+                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                <span>Switzerland · Remote worldwide</span>
+              </div>
+            </div>
+
+            <form class="footer-subscribe" id="subscribe-form">
+              <label class="sr-only" for="subscribe-email">Email</label>
+              <div class="footer-subscribe-row">
+                <input type="email" id="subscribe-email" required placeholder="your@email.com" />
+                <button class="btn-primary" type="submit">Subscribe</button>
+              </div>
+              <p id="subscribe-message" class="footer-note"></p>
+            </form>
           </div>
         </div>
 
-        <form class="footer-subscribe" id="subscribe-form">
-          <label class="sr-only" for="subscribe-email">Email</label>
-          <div class="footer-subscribe-row">
-            <input type="email" id="subscribe-email" required placeholder="your@email.com" />
-            <button class="btn-primary" type="submit">Subscribe</button>
+        <div class="footer-bottom">
+          <div class="footer-legal">
+            <a href="policies/privacy-policy.html">Privacy Policy</a>
+            <span aria-hidden="true">·</span>
+            <a href="policies/cookie-policy.html">Cookies Policy</a>
+            <span aria-hidden="true">·</span>
+            <a href="policies/terms-and-conditions.html">Terms and Conditions</a>
           </div>
-          <p id="subscribe-message" class="footer-note"></p>
-        </form>
+
+          <div class="footer-copy">© 2025 REPRONOVA. All rights reserved.</div>
+        </div>
       </div>
-    </div>
-
-    <div class="footer-bottom">
-      <div class="footer-legal">
-        <a href="policies/privacy-policy.html">Privacy</a>
-        <span aria-hidden="true">·</span>
-        <a href="policies/cookie-policy.html">Cookies</a>
-        <span aria-hidden="true">·</span>
-        <a href="policies/terms-and-conditions.html">Terms</a>
-      </div>
-
-      <div class="footer-copy">© 2025 REPRONOVA. All rights reserved.</div>
-    </div>
-  </div>
-</footer>
-
+    </footer>
 
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="js/main.js"></script>
 
-    <!-- Minimal Search Overlay Logic (no external deps) -->
-    <script>
-      (function () {
-        const overlay = document.getElementById("search-overlay");
-        const openBtn = document.getElementById("open-search");
-        const openBtnMobile = document.getElementById("open-search-mobile");
-        const closeBtn = document.getElementById("close-search");
-        const input = document.getElementById("search-input");
-
-        function openSearch() {
-          overlay.classList.add("open");
-          overlay.setAttribute("aria-hidden", "false");
-          if (openBtn) openBtn.setAttribute("aria-expanded", "true");
-          setTimeout(() => input && input.focus(), 30);
-        }
-
-        function closeSearch() {
-          overlay.classList.remove("open");
-          overlay.setAttribute("aria-hidden", "true");
-          if (openBtn) openBtn.setAttribute("aria-expanded", "false");
-        }
-
-        if (openBtn) openBtn.addEventListener("click", openSearch);
-        if (openBtnMobile) openBtnMobile.addEventListener("click", openSearch);
-        if (closeBtn) closeBtn.addEventListener("click", closeSearch);
-
-        overlay.addEventListener("click", (e) => {
-          if (e.target === overlay) closeSearch();
-        });
-
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape" && overlay.classList.contains("open")) closeSearch();
-        });
-
-        // Demo submit: no backend. You can connect later.
-        const form = document.getElementById("search-form");
-        if (form) {
-          form.addEventListener("submit", (e) => {
-            e.preventDefault();
-            closeSearch();
-          });
-        }
-      })();
-    </script>
+ 
   </body>
 </html>

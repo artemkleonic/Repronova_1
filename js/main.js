@@ -12,6 +12,7 @@
  * - Forms
  * - Dynamic CSS var: --header-current
  * - Search overlay + basic in-page search highlight
+ * - Language dropdown (aria + click outside)  ✅ moved from HTML
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -44,7 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const backToTop = document.getElementById('back-to-top');
   const burger = document.getElementById('burger');
   const navMobile = document.getElementById('nav-mobile');
+
+  // Language switcher
   const langSwitcherEl = document.getElementById('lang-switcher');
+  const langCurrentBtn = langSwitcherEl ? langSwitcherEl.querySelector('.lang-current') : null;
 
   // Search elements (must exist in HTML)
   const searchOverlay = document.getElementById('search-overlay');
@@ -141,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (openSearchBtn) openSearchBtn.setAttribute('aria-expanded', 'true');
 
-    // lock scroll (optional but better UX)
+    // lock scroll
     document.body.classList.add('search-open');
 
     // focus input
@@ -176,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ESC: close search OR menu
+  // ESC: close search OR menu OR language dropdown
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
 
@@ -189,15 +193,14 @@ document.addEventListener('DOMContentLoaded', () => {
       toggleMenu(false);
       return;
     }
+
+    if (langSwitcherEl && langSwitcherEl.classList.contains('open')) {
+      langSwitcherEl.classList.remove('open');
+      if (langCurrentBtn) langCurrentBtn.setAttribute('aria-expanded', 'false');
+    }
   });
 
-  /* ==================== BASIC IN-PAGE SEARCH ====================
-     - highlights found text in main content
-     - scrolls to first match
-     Note: Avoid highlighting inside script/style/nav/footer/inputs etc.
-  =============================================================== */
-
-  // remove old highlights
+  /* ==================== BASIC IN-PAGE SEARCH ==================== */
   function clearHighlights() {
     const marks = document.querySelectorAll('mark.repro-mark');
     marks.forEach((m) => {
@@ -218,7 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const el = node.parentElement;
     const tag = el.tagName;
 
-    // skip obvious areas
     if (
       tag === 'SCRIPT' ||
       tag === 'STYLE' ||
@@ -230,13 +232,11 @@ document.addEventListener('DOMContentLoaded', () => {
       tag === 'SELECT'
     ) return true;
 
-    // skip header/nav/footer + overlays
     if (el.closest('header')) return true;
     if (el.closest('nav')) return true;
     if (el.closest('footer')) return true;
     if (el.closest('#search-overlay')) return true;
 
-    // skip hidden
     const style = window.getComputedStyle(el);
     if (style.display === 'none' || style.visibility === 'hidden') return true;
 
@@ -319,11 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
       closeSearch();
 
       const result = highlightInMain(query);
-
-      if (result.first) {
-        // give DOM a tick to render marks
-        window.setTimeout(() => scrollToMark(result.first), 50);
-      }
+      if (result.first) window.setTimeout(() => scrollToMark(result.first), 50);
     });
   }
 
@@ -408,8 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateLangSwitcherUI(lang) {
     if (!langSwitcherEl) return;
 
-    const currentBtn = langSwitcherEl.querySelector('.lang-current');
-    if (currentBtn) currentBtn.textContent = lang.toUpperCase();
+    if (langCurrentBtn) langCurrentBtn.textContent = lang.toUpperCase();
 
     langSwitcherEl.querySelectorAll('[data-lang]').forEach((btn) => {
       btn.classList.toggle('active', btn.dataset.lang === lang);
@@ -443,13 +438,51 @@ document.addEventListener('DOMContentLoaded', () => {
     applyTranslations();
   })();
 
+  /* ==================== LANGUAGE DROPDOWN (moved from HTML) ==================== */
+  function openLangMenu() {
+    if (!langSwitcherEl || !langCurrentBtn) return;
+    langSwitcherEl.classList.add('open');
+    langCurrentBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeLangMenu() {
+    if (!langSwitcherEl || !langCurrentBtn) return;
+    langSwitcherEl.classList.remove('open');
+    langCurrentBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  function toggleLangMenu() {
+    if (!langSwitcherEl || !langCurrentBtn) return;
+    const isOpen = langSwitcherEl.classList.contains('open');
+    if (isOpen) closeLangMenu();
+    else openLangMenu();
+  }
+
+  // click on current language button toggles dropdown
+  if (langCurrentBtn) {
+    langCurrentBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleLangMenu();
+    });
+  }
+
+  // click outside closes dropdown
+  document.addEventListener('click', (e) => {
+    if (!langSwitcherEl || !langSwitcherEl.classList.contains('open')) return;
+    if (!langSwitcherEl.contains(e.target)) closeLangMenu();
+  });
+
+  // click on language option sets language + closes dropdown
   if (langSwitcherEl) {
     langSwitcherEl.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-lang]');
       if (!btn) return;
+
       const lang = btn.dataset.lang;
       if (!lang) return;
+
       setLanguage(lang);
+      closeLangMenu();
     });
   }
 
