@@ -12,7 +12,7 @@
  * - Forms
  * - Dynamic CSS var: --header-current
  * - Search overlay + basic in-page search highlight
- * - Language dropdown (aria + click outside)  ✅ moved from HTML
+ * - Language dropdown (aria + click outside)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -23,21 +23,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ==================== SWIPER ==================== */
   if (window.Swiper) {
-    new Swiper('.swiper-services', {
-      loop: true,
-      slidesPerView: 1,
-      spaceBetween: 24,
-      pagination: { el: '.services-pagination', clickable: true },
-      breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
-    });
+    if (document.querySelector('.swiper-services')) {
+      new Swiper('.swiper-services', {
+        loop: true,
+        slidesPerView: 1,
+        spaceBetween: 24,
+        pagination: { el: '.services-pagination', clickable: true },
+        breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
+      });
+    }
 
-    new Swiper('.swiper-testimonials', {
-      loop: true,
-      slidesPerView: 1,
-      spaceBetween: 24,
-      pagination: { el: '.testimonials-pagination', clickable: true },
-      breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
-    });
+    if (document.querySelector('.swiper-case-profiles')) {
+      new Swiper('.swiper-case-profiles', {
+        loop: true,
+        slidesPerView: 1,
+        spaceBetween: 24,
+        pagination: { el: '.case-profiles-pagination', clickable: true },
+        breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
+      });
+    }
   }
 
   /* ==================== DOM ELEMENTS ==================== */
@@ -46,17 +50,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const burger = document.getElementById('burger');
   const navMobile = document.getElementById('nav-mobile');
 
-  // Language switcher
   const langSwitcherEl = document.getElementById('lang-switcher');
   const langCurrentBtn = langSwitcherEl ? langSwitcherEl.querySelector('.lang-current') : null;
 
-  // Search elements (must exist in HTML)
   const searchOverlay = document.getElementById('search-overlay');
   const openSearchBtn = document.getElementById('open-search');
   const openSearchMobileBtn = document.getElementById('open-search-mobile');
   const closeSearchBtn = document.getElementById('close-search');
   const searchForm = document.getElementById('search-form');
   const searchInput = document.getElementById('search-input');
+
+  /* ==================== DYNAMIC COPYRIGHT YEAR ==================== */
+  const currentYearEl = document.getElementById('current-year');
+  if (currentYearEl) {
+    currentYearEl.textContent = String(new Date().getFullYear());
+  }
 
   /* ==================== HELPERS ==================== */
   function setHeaderCurrentVar() {
@@ -81,11 +89,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('scroll', handleScroll, { passive: true });
   window.addEventListener('resize', setHeaderCurrentVar);
+
   setHeaderCurrentVar();
   handleScroll();
 
   if (backToTop) {
-    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 
   /* ==================== MOBILE MENU ==================== */
@@ -105,8 +116,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function toggleMenu(forceState) {
     if (!burger || !navMobile) return;
+
     const shouldOpen =
-      typeof forceState === 'boolean' ? forceState : !navMobile.classList.contains('open');
+      typeof forceState === 'boolean'
+        ? forceState
+        : !navMobile.classList.contains('open');
+
     setMenuState(shouldOpen);
   }
 
@@ -123,9 +138,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('click', (e) => {
       if (!navMobile.classList.contains('open')) return;
+
       const clickInsideMenu = navMobile.contains(e.target);
       const clickOnBurger = burger.contains(e.target);
-      if (!clickInsideMenu && !clickOnBurger) toggleMenu(false);
+
+      if (!clickInsideMenu && !clickOnBurger) {
+        toggleMenu(false);
+      }
     });
   }
 
@@ -135,20 +154,21 @@ document.addEventListener('DOMContentLoaded', () => {
   function openSearch() {
     if (!searchOverlay) return;
 
-    // close menu if open (so it doesn't overlap)
-    if (navMobile && navMobile.classList.contains('open')) toggleMenu(false);
+    if (navMobile && navMobile.classList.contains('open')) {
+      toggleMenu(false);
+    }
 
     lastFocusEl = document.activeElement;
 
     searchOverlay.classList.add('open');
     searchOverlay.setAttribute('aria-hidden', 'false');
 
-    if (openSearchBtn) openSearchBtn.setAttribute('aria-expanded', 'true');
+    if (openSearchBtn) {
+      openSearchBtn.setAttribute('aria-expanded', 'true');
+    }
 
-    // lock scroll
     document.body.classList.add('search-open');
 
-    // focus input
     window.setTimeout(() => {
       if (searchInput) searchInput.focus();
     }, 30);
@@ -160,11 +180,12 @@ document.addEventListener('DOMContentLoaded', () => {
     searchOverlay.classList.remove('open');
     searchOverlay.setAttribute('aria-hidden', 'true');
 
-    if (openSearchBtn) openSearchBtn.setAttribute('aria-expanded', 'false');
+    if (openSearchBtn) {
+      openSearchBtn.setAttribute('aria-expanded', 'false');
+    }
 
     document.body.classList.remove('search-open');
 
-    // restore focus
     if (lastFocusEl && typeof lastFocusEl.focus === 'function') {
       window.setTimeout(() => lastFocusEl.focus(), 0);
     }
@@ -180,7 +201,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ESC: close search OR menu OR language dropdown
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
 
@@ -196,16 +216,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (langSwitcherEl && langSwitcherEl.classList.contains('open')) {
       langSwitcherEl.classList.remove('open');
-      if (langCurrentBtn) langCurrentBtn.setAttribute('aria-expanded', 'false');
+
+      if (langCurrentBtn) {
+        langCurrentBtn.setAttribute('aria-expanded', 'false');
+      }
     }
   });
 
   /* ==================== BASIC IN-PAGE SEARCH ==================== */
   function clearHighlights() {
     const marks = document.querySelectorAll('mark.repro-mark');
+
     marks.forEach((m) => {
       const parent = m.parentNode;
       if (!parent) return;
+
       parent.replaceChild(document.createTextNode(m.textContent), m);
       parent.normalize();
     });
@@ -230,7 +255,9 @@ document.addEventListener('DOMContentLoaded', () => {
       tag === 'INPUT' ||
       tag === 'BUTTON' ||
       tag === 'SELECT'
-    ) return true;
+    ) {
+      return true;
+    }
 
     if (el.closest('header')) return true;
     if (el.closest('nav')) return true;
@@ -253,10 +280,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!main) return { count: 0, first: null };
 
     const re = new RegExp(escapeRegExp(q), 'gi');
+
     const walker = document.createTreeWalker(main, NodeFilter.SHOW_TEXT, {
       acceptNode: (node) => {
-        if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
-        if (shouldSkipNode(node)) return NodeFilter.FILTER_REJECT;
+        if (!node.nodeValue || !node.nodeValue.trim()) {
+          return NodeFilter.FILTER_REJECT;
+        }
+
+        if (shouldSkipNode(node)) {
+          return NodeFilter.FILTER_REJECT;
+        }
+
         return NodeFilter.FILTER_ACCEPT;
       }
     });
@@ -306,8 +340,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function scrollToMark(markEl) {
     if (!markEl) return;
+
     const rect = markEl.getBoundingClientRect();
     const top = rect.top + window.scrollY - getScrollOffset();
+
     window.scrollTo({ top, behavior: 'smooth' });
   }
 
@@ -319,7 +355,10 @@ document.addEventListener('DOMContentLoaded', () => {
       closeSearch();
 
       const result = highlightInMain(query);
-      if (result.first) window.setTimeout(() => scrollToMark(result.first), 50);
+
+      if (result.first) {
+        window.setTimeout(() => scrollToMark(result.first), 50);
+      }
     });
   }
 
@@ -340,7 +379,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const top = target.getBoundingClientRect().top + window.scrollY - getScrollOffset();
     window.scrollTo({ top, behavior: 'smooth' });
 
-    if (navMobile && navMobile.classList.contains('open')) toggleMenu(false);
+    if (navMobile && navMobile.classList.contains('open')) {
+      toggleMenu(false);
+    }
   });
 
   /* ==================== COUNTERS ==================== */
@@ -348,41 +389,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function setCounterFinalValue(el) {
     const target = Number(el.getAttribute('data-counter')) || 0;
-    if (target >= 1000) el.textContent = String(target);
-    else el.textContent = `${target}+`;
+
+    if (target >= 1000) {
+      el.textContent = String(target);
+    } else {
+      el.textContent = `${target}+`;
+    }
   }
 
   if ('IntersectionObserver' in window && counters.length) {
-    const countersObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
+    const countersObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
 
-        const el = entry.target;
-        const target = Number(el.getAttribute('data-counter')) || 0;
-        const duration = 1500;
-        const start = performance.now();
+          const el = entry.target;
+          const target = Number(el.getAttribute('data-counter')) || 0;
+          const duration = 1500;
+          const start = performance.now();
 
-        function animate(time) {
-          const progress = Math.min((time - start) / duration, 1);
-          const value = Math.floor(target * progress);
+          function animate(time) {
+            const progress = Math.min((time - start) / duration, 1);
+            const value = Math.floor(target * progress);
 
-          if (target >= 1000) el.textContent = String(value);
-          else el.textContent = `${value}+`;
+            if (target >= 1000) {
+              el.textContent = String(value);
+            } else {
+              el.textContent = `${value}+`;
+            }
 
-          if (progress < 1) requestAnimationFrame(animate);
-        }
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            }
+          }
 
-        requestAnimationFrame(animate);
-        observer.unobserve(el);
-      });
-    }, { threshold: 0.4 });
+          requestAnimationFrame(animate);
+          observer.unobserve(el);
+        });
+      },
+      { threshold: 0.4 }
+    );
 
     counters.forEach((c) => countersObserver.observe(c));
   } else {
     counters.forEach(setCounterFinalValue);
   }
 
-  /* ==================== I18N (SKELETON) ==================== */
+  /* ==================== I18N SKELETON ==================== */
   const translations = window.REPRONOVA_TRANSLATIONS || {};
   let currentLang = 'en';
 
@@ -393,18 +446,25 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-i18n]').forEach((el) => {
       const key = el.getAttribute('data-i18n');
       const value = dict[key];
+
       if (!value) return;
 
       const tag = el.tagName;
-      if (tag === 'INPUT' || tag === 'TEXTAREA') el.placeholder = value;
-      else el.textContent = value;
+
+      if (tag === 'INPUT' || tag === 'TEXTAREA') {
+        el.placeholder = value;
+      } else {
+        el.textContent = value;
+      }
     });
   }
 
   function updateLangSwitcherUI(lang) {
     if (!langSwitcherEl) return;
 
-    if (langCurrentBtn) langCurrentBtn.textContent = lang.toUpperCase();
+    if (langCurrentBtn) {
+      langCurrentBtn.textContent = lang.toUpperCase();
+    }
 
     langSwitcherEl.querySelectorAll('[data-lang]').forEach((btn) => {
       btn.classList.toggle('active', btn.dataset.lang === lang);
@@ -438,27 +498,33 @@ document.addEventListener('DOMContentLoaded', () => {
     applyTranslations();
   })();
 
-  /* ==================== LANGUAGE DROPDOWN (moved from HTML) ==================== */
+  /* ==================== LANGUAGE DROPDOWN ==================== */
   function openLangMenu() {
     if (!langSwitcherEl || !langCurrentBtn) return;
+
     langSwitcherEl.classList.add('open');
     langCurrentBtn.setAttribute('aria-expanded', 'true');
   }
 
   function closeLangMenu() {
     if (!langSwitcherEl || !langCurrentBtn) return;
+
     langSwitcherEl.classList.remove('open');
     langCurrentBtn.setAttribute('aria-expanded', 'false');
   }
 
   function toggleLangMenu() {
     if (!langSwitcherEl || !langCurrentBtn) return;
+
     const isOpen = langSwitcherEl.classList.contains('open');
-    if (isOpen) closeLangMenu();
-    else openLangMenu();
+
+    if (isOpen) {
+      closeLangMenu();
+    } else {
+      openLangMenu();
+    }
   }
 
-  // click on current language button toggles dropdown
   if (langCurrentBtn) {
     langCurrentBtn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -466,13 +532,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // click outside closes dropdown
   document.addEventListener('click', (e) => {
     if (!langSwitcherEl || !langSwitcherEl.classList.contains('open')) return;
-    if (!langSwitcherEl.contains(e.target)) closeLangMenu();
+
+    if (!langSwitcherEl.contains(e.target)) {
+      closeLangMenu();
+    }
   });
 
-  // click on language option sets language + closes dropdown
   if (langSwitcherEl) {
     langSwitcherEl.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-lang]');
@@ -496,6 +563,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const dict = translations[currentLang] || {};
       const defaultText = 'Thank you! We will get back to you within 1–2 business days.';
+
       formMessage.textContent = dict['contact.success'] || defaultText;
 
       contactForm.reset();
@@ -514,6 +582,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const dict = translations[currentLang] || {};
       const defaultText = 'Thank you for subscribing!';
+
       subscribeMessage.textContent = dict['footer.subscribe.success'] || defaultText;
 
       subscribeForm.reset();
